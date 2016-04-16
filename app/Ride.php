@@ -35,4 +35,9 @@ class Ride extends Model
     {
         return $this->hasMany('App\Passenger', 'ride_id', 'id');
     }
+
+    public function favorites()
+    {
+        return $this->morphMany('App\Favorite', 'favoritable');
+    }
 }
