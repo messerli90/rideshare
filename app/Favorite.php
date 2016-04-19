@@ -6,11 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Favorite extends Model
 {
-    protected $fillable = ["favoritable_id", "favoritable_type", "user_id"];
+    protected $fillable = ["ride_id", "user_id"];
 
-    public function favoritable()
+    public function ride()
     {
-        return $this->morphTo();
+        return $this->belongsTo('App\Ride');
     }
 
     public function user()

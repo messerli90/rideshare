@@ -13,7 +13,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'home_city', 'home_state', 'phone_number'
+        'name', 'email', 'home_city', 'home_state', 'phone_number', 'facebook_id', 'avatar'
     ];
 
     /**
@@ -67,10 +67,10 @@ class User extends Authenticatable
     /**
      * Get Favorites
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function favorites()
     {
-        return $this->morphMany('App\Favorite', 'favoritable');
+        return $this->hasMany('App\Favorite');
     }
 }

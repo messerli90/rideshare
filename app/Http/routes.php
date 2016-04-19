@@ -14,12 +14,24 @@
 Route::get('/', 'RidesController@index');
 Route::get('about', 'PagesController@about');
 
-Route::auth();
+Route::get('test', function() {
+   return response()->json(array('success' => true));
+});
+
+//Route::auth();
+
+Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');
+Route::get('auth/facebook/callback', 'Auth\AuthController@handleProviderCallback');
 
 Route::group(['middleware' => 'auth', 'prefix' => 'dashboard'], function () {
-    Route::get('/', 'UsersController@dashboard');
+    Route::get('/', ['uses' => 'UsersController@dashboard', 'name' => 'dashboard']);
     Route::put('/', 'UsersController@update');
     Route::get('edit', 'UsersController@edit');
+    Route::get('favorites', 'FavoritesController@index');
+});
+
+Route::group(['prefix' => 'users'], function() {
+   Route::get('{user}', 'UsersController@profile');
 });
 
 Route::group(['prefix' => 'rides'], function () {
@@ -32,4 +44,5 @@ Route::group(['prefix' => 'rides'], function () {
     Route::get('{ride}/delete', ['uses' => 'RidesController@destroy', 'middleware' => 'auth']);
     Route::post('{ride}/comment', ['uses' => 'RidesController@comment', 'middleware' => 'auth']);
     Route::get('{ride}/add-passenger', ['uses' => 'RidesController@addPassenger', 'middleware' => 'auth']);
+    Route::get('{ride}/add-favorite', ['uses' => 'FavoritesController@addRide', 'middleware' => 'auth']);
 });

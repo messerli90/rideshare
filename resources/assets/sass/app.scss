@@ -1,5 +1,45 @@
+$primary: #5e5e5e;
+$secondary: #ff590b;
+
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "node_modules/font-awesome/scss/font-awesome";
+
+@import "_card";
 
 body {
 	padding-top: 70px;
+	background: #f8f8ff;
+}
+
+a {
+	color: $secondary;
+
+	&:hover {
+		color: $primary;
+		text-decoration: none;
+	}
+}
+
+.ride-filter {
+	h3 {
+		font-size: 16px;
+		color: #ff590b;
+		line-height: inherit;
+		font-weight: 400;
+		text-transform: uppercase;
+		margin-top: 5px;
+	}
+
+	label {
+		color: #5e5e5e;
+		margin-left: 0;
+		margin-top: 2px;
+		text-transform: uppercase;
+		font-weight: 300;
+		font-size: 12px;
+	}
+
+	button {
+		margin-top: 60px;
+	}
 }

@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Passenger;
 use App\Ride;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class RidesController extends Controller
 {
@@ -56,10 +58,11 @@ class RidesController extends Controller
                     $query->where('departure_date', $request->get('departure_date'));
                 }
             })
+            ->where('departure_date', '>', Carbon::now())
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('rides.index')->withRides($rides);
+        return view('rides.index')->withRides($rides)->with(['success'=> 'blahblah']);
     }
 
     /**

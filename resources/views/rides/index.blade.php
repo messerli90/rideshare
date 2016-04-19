@@ -1,23 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+    @include('rides.partials.filter')
     <div class="row">
-        <div class="col-md-3">
-            @include('rides.partials.filter')
-        </div>
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="row">
                 @foreach($rides as $ride)
                     <div class="col-md-4">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <a href="{{ url('/rides/' . $ride->id) }}">{{ $ride->title }}</a>
-                            </div>
-                            <div class="panel-body">
-                                <p>{{ $ride->departure_city }} -> {{ $ride->arrival_city }}</p>
-                                <p>Posted {{ $ride->created_at->toFormattedDateString() }}</p>
-                            </div>
-                        </div>
+                        @include('rides.partials.card')
                     </div>
                 @endforeach
             </div>
@@ -28,4 +18,13 @@
             </div>
         </div>
     </div>
+@stop
+
+@section('scripts')
+    <script>
+        $('[data-action="go-to"]').click(function(){
+            var id = $(this).attr('data-id');
+            window.location = "http://rideshare.dev/rides/" + id;
+        });
+    </script>
 @stop

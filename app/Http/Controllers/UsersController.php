@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests;
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -41,5 +42,10 @@ class UsersController extends Controller
         ]);
 
         return view('users.dashboard')->withUser($user);
+    }
+
+    public function profile(User $user)
+    {
+        return view('users.profile', ['user' => $user]);
     }
 }
