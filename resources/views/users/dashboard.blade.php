@@ -1,8 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="jumbotron">
-        <h1>{{ $user->name }}</h1>
+    <div class="row">
+        <div class="col-md-3">
+            <img src="{{ $user->avatar }}" alt="" class="" style="width: 100%;">
+        </div>
+        <div class="col-md-9">
+            <h1>{{ $user->name }}</h1>
+        </div>
     </div>
 
     {{-- If user doesn't have a complete profile show message--}}
@@ -18,13 +23,20 @@
     <div class="row">
         <div class="col-md-6">
             <h4>Driving</h4>
-            @foreach($user->ridesAsDriver as $ride)
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <a href="/rides/{{ $ride->id }}">{{ $ride->title }}</a>
-                    </li>
-                </ul>
-            @endforeach
+            <ul class="list-group">
+                @foreach($user->ridesAsDriver as $ride)
+                    <div class="card card--small" data-action="go-to" data-id="{{ $ride->id }}">
+                        @include('rides.partials.card')
+                    </div>
+                {{--<li class="list-group-item">--}}
+                    {{--<a href="/rides/{{ $ride->id }}">{{ $ride->title }}</a>--}}
+                    {{--<span class="pull-right">--}}
+                        {{--<a href="{{ url('/rides/'.$ride->id.'/edit') }}"><i class="fa fa-fw fa-pencil-square-o"></i></a>--}}
+                        {{--<a href="{{ url('/rides/'.$ride->id.'/delete') }}"><i class="fa fa-fw fa-trash-o"></i></a>--}}
+                    {{--</span>--}}
+                {{--</li>--}}
+                @endforeach
+            </ul>
         </div>
         <div class="col-md-6">
             <h4>Passenger</h4>

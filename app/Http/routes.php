@@ -14,11 +14,7 @@
 Route::get('/', 'RidesController@index');
 Route::get('about', 'PagesController@about');
 
-Route::get('test', function() {
-   return response()->json(array('success' => true));
-});
-
-//Route::auth();
+Route::auth();
 
 Route::get('auth/facebook', 'Auth\AuthController@redirectToProvider');
 Route::get('auth/facebook/callback', 'Auth\AuthController@handleProviderCallback');

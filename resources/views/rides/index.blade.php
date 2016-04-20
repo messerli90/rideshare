@@ -7,7 +7,9 @@
             <div class="row">
                 @foreach($rides as $ride)
                     <div class="col-md-4">
-                        @include('rides.partials.card')
+                        <div class="card card--big" data-action="go-to" data-id="{{ $ride->id }}">
+                            @include('rides.partials.card')
+                        </div>
                     </div>
                 @endforeach
             </div>

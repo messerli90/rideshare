@@ -9,6 +9,10 @@
                 </div>
                 <div class="panel-footer">
                     <h3 style="margin-top: 10px; text-align: center;">{{ $ride->driver->name }}</h3>
+                    <p style="text-align: center">
+                        <a href="{{ url('/users/' . $ride->driver->id) }}"><i class="fa fa-fw fa-user"></i></a>
+                        <a href="{{ url('/users/' . $ride->driver->id) }}"><i class="fa fa-fw fa-facebook-square"></i></a>
+                    </p>
                 </div>
             </div>
 
