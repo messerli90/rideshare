@@ -9,6 +9,7 @@
                 </div>
                 <div class="panel-footer">
                     <h3 style="margin-top: 10px; text-align: center;">{{ $ride->driver->name }}</h3>
+                    <hr>
                     <p style="text-align: center">
                         <a href="{{ url('/users/' . $ride->driver->id) }}"><i class="fa fa-fw fa-user"></i></a>
                         <a href="{{ url('/users/' . $ride->driver->id) }}"><i class="fa fa-fw fa-facebook-square"></i></a>
@@ -39,7 +40,7 @@
         <div class="col-md-9">
             <div class="row">
                 <div class="col-md-9">
-                    <h2>{{ $ride->title }}</h2>
+                    <h2 id="ride-header">{{ $ride->title }}</h2>
                     <p>Ride from <strong>{{ $ride->departure_city }}, {{ $ride->departureState->code }}</strong> to
                         <strong>{{ $ride->arrival_city }}, {{ $ride->arrivalState->code }}</strong></p>
                     <p>{{ $ride->message }}</p>
@@ -51,18 +52,34 @@
                         <p>No comments, yet</p>
                     @endif
                     @foreach($ride->comments as $comment)
-                        <div class="media">
-                            <div class="media-left">
-                                <img src="http://placehold.it/64x64" alt="avatar" class="media-object">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="media-left">
+                                    <img src="{{ $comment->author->avatar }}" alt="avatar" class="media-object" width="75">
+                                </div>
+                                <div class="media-body">
+                                    <h4 class="media-heading"><a href="{{ url('/users/'.$comment->author->id) }}">{{ $comment->author->name }}</a></h4>
+                                    <p>{{ $comment->message }}</p>
+                                </div>
                             </div>
-                            <div class="media-body">
-                                <h4 class="media-heading"><a href="{{ url('/users/'.$comment->author->id) }}">{{ $comment->author->name }}</a></h4>
-                                <p>{{ $comment->message }}</p>
+                            <div class="panel-footer comment-meta text-right">
+                                <span class="pull-left small">Posted: {{ $comment->created_at->toFormattedDateString() }}</span>
+                                <ul class="list-inline">
+                                    @if(Auth::check() && Auth::user()->id == $comment->author->id)
+                                        <li class="small"><a href="#">edit</a></li>
+                                        <li class="small"><a href="{{ url('/comments/' . $comment->id . '/delete') }}">delete</a></li>
+                                    @else
+                                        <li class="small"><a href="#">reply</a></li>
+                                    @endif
+                                </ul>
                             </div>
                         </div>
-                    @endforeach
+                        <div class="media">
 
-                    <form action="{{ url('/rides/'.$ride->id.'/comment') }}" method="post" class="form">
+                        </div>
+                    @endforeach
+                    <hr>
+                    <form action="{{ url('/rides/'.$ride->id.'/comment') }}" method="post" class="form" id="add-comment">
                         {{ csrf_field() }}
                         <input type="hidden" name="ride_id" value="{{ $ride->id }}">
                         <div class="form-group">
@@ -78,6 +95,7 @@
                     @if(!count($ride->passengers))
                         <p>No passengers, yet</p>
                     @endif
+                    <div id="passenger-list">
                     @foreach($ride->passengers as $passenger)
                         <div class="media">
                             <img src="http://placehold.it/64x64" alt="avatar" class="media-object">
@@ -86,31 +104,36 @@
                             <h4 class="media-heading"><a href="{{ url('/users/'.$passenger->passenger->id) }}">{{ $passenger->passenger->name }}</a></h4>
                         </div>
                     @endforeach
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <hr>
 
 @stop
 
 @section('scripts')
-    <!-- Vue.js JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.10/vue.min.js"></script>
-
     <script>
-        new Vue({
-            el: '#show-ride',
+        $(document).ready(function() {
+            var CSRF_TOKEN = $('meta[name="token"]').attr('content');
 
-            data: {
-                rideId: '{{ $ride->id }}'
-            },
+            // AJAX call to add Comment
+            {{--$('#add-comment').submit(function(e) {--}}
+                {{--e.preventDefault();--}}
 
-            ready: function() {
-                this.$http.get('/api/v1/rides/{{$ride->id}}/is-passenger', function(data) {
-                    console.dir(data);
-                })
-            }
-        })
+                {{--var data = { message: $('#message').val(), _token: CSRF_TOKEN };--}}
+
+                {{--$.ajax({--}}
+                    {{--url: '/rides/' + '{{ $ride->id }}' + '/comment',--}}
+                    {{--type: 'POST',--}}
+                    {{--data: data,--}}
+                    {{--dataType: 'JSON',--}}
+                    {{--success: function(res) {--}}
+                        {{--$('#passenger-list').append();--}}
+                    {{--}--}}
+                {{--});--}}
+                {{--return false;--}}
+            {{--});--}}
+        });
     </script>
 @stop

@@ -5,6 +5,12 @@
     <div class="row">
         <div class="col-md-12">
             <div class="row">
+                @if(count($rides) == 0)
+                    <div class="col-md-12">
+                        <p class="text-center text-info">No rides found, try expanding your search.</p>
+                    </div>
+
+                @endif
                 @foreach($rides as $ride)
                     <div class="col-md-4">
                         <div class="card card--big" data-action="go-to" data-id="{{ $ride->id }}">
@@ -23,10 +29,5 @@
 @stop
 
 @section('scripts')
-    <script>
-        $('[data-action="go-to"]').click(function(){
-            var id = $(this).attr('data-id');
-            window.location = "http://rideshare.dev/rides/" + id;
-        });
-    </script>
+
 @stop

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="token" value="{{ csrf_token() }}">
+    <meta name="token" content="{{ csrf_token() }}">
 
     <title>Ride Share</title>
 
@@ -29,6 +29,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script>
+        $('[data-action="go-to"]').click(function(){
+            var id = $(this).attr('data-id');
+            window.location = "http://rideshare.dev/rides/" + id;
+        });
+    </script>
 
     @yield('scripts')
 </body>

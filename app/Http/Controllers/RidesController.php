@@ -224,7 +224,7 @@ class RidesController extends Controller
             'user_id'           => Auth::user()->id
         ]);
 
-        return back();
+        return response()->json(['success' => true, 'message' => 'Comment Added.']);
     }
 
     public function addPassenger(Ride $ride)
@@ -250,6 +250,6 @@ class RidesController extends Controller
             'ride_id'       => $ride->id
         ]);
 
-        return back();
+        return response()->json(['success' => true, 'message' => 'Requested passenger spot.']);
     }
 }

@@ -42,3 +42,7 @@ Route::group(['prefix' => 'rides'], function () {
     Route::get('{ride}/add-passenger', ['uses' => 'RidesController@addPassenger', 'middleware' => 'auth']);
     Route::get('{ride}/add-favorite', ['uses' => 'FavoritesController@addRide', 'middleware' => 'auth']);
 });
+
+Route::group(['prefix' => 'comments'], function() {
+    Route::get('{comment}/delete', ['uses' => 'CommentsController@destroy', 'middleware' => 'auth']);
+});
